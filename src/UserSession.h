@@ -3,12 +3,9 @@
 
 #include <string>
 
-struct UserSession {
-    std::string userID;     
-    std::string sessionID;   
-    std::string timestamp;    
-    std::string appName;    
-    std::string eventType; 
+struct User {
+    int userID;
+    double Duration;
 };
 
 #endif

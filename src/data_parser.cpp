@@ -3,8 +3,8 @@
 #include <sstream>
 #include <iostream>
 
-std::vector<UserSession> parseTSV(const std::string& filePath) {
-    std::vector<UserSession> data;
+std::vector<User> parseTSV(const std::string& filePath) {
+    std::vector<User> data;
     std::ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -32,7 +32,7 @@ std::vector<UserSession> parseTSV(const std::string& filePath) {
             std::getline(ss, eventType, '\t')) {
             
             // add the parsed session data to the vector
-            data.push_back({userID, sessionID, timestamp, appName, eventType});
+            // Add data to User struct
         } else {
             std::cerr << "Error: Malformed line: " << line << std::endl;
         }

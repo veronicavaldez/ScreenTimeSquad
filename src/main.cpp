@@ -4,7 +4,7 @@
 
 int main() {
     std::string filePath = "src/lsapp.tsv";
-    std::vector<UserSession> sessions = parseTSV(filePath);
+    std::vector<User> sessions = parseTSV(filePath);
 
     if (sessions.empty()) {
         std::cerr << "No data loaded from the file." << std::endl;

@@ -5,6 +5,6 @@
 #include <vector>
 #include "UserSession.h"
 
-std::vector<UserSession> parseTSV(const std::string& filePath);
+std::vector<User> parseTSV(const std::string& filePath);
 
 #endif
