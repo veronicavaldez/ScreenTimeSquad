@@ -23,16 +23,24 @@ std::vector<User> parseTSV(const std::string& filePath) {
         }
 
         std::stringstream ss(line);
-        std::string userID, sessionID, timestamp, appName, eventType;
+        std::string userIDStr, sessionID, timestamp, appName, eventType;
 
-        if (std::getline(ss, userID, '\t') &&
+        if (std::getline(ss, userIDStr, '\t') &&
             std::getline(ss, sessionID, '\t') &&
             std::getline(ss, timestamp, '\t') &&
             std::getline(ss, appName, '\t') &&
             std::getline(ss, eventType, '\t')) {
-            
-            // add the parsed session data to the vector
-            // Add data to User struct
+        
+            // add data to User struct
+            User user;
+            user.userID = std::stoi(userIDStr);
+            user.timestamp = timestamp;
+            user.eventType = eventType;
+            user.Duration = 0;   // duration calculated later
+
+            // add the parsed data to the vector
+            data.push_back(user);
+
         } else {
             std::cerr << "Error: Malformed line: " << line << std::endl;
         }

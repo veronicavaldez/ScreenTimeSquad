@@ -6,6 +6,8 @@
 struct User {
     int userID;
     double Duration;
+    std::string timestamp;
+    std::string eventType;
 };
 
 #endif
