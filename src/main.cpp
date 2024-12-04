@@ -26,11 +26,23 @@ int main() {
     // use merge sort for displaying ranked users
     algorithms::mergeSort(users, 0, users.size() - 1);
 
-    // display rankings
+    // display ranking
     std::cout << "\nLeaderboard:" << std::endl;
     for (size_t i = 0; i < std::min<size_t>(users.size(), 5); ++i) {
         algorithms::printUserDuration(users[i]);
     }
+
+    // Zane- Display category-specific breakdown for all users
+    std::cout << "\nCategory Breakdown for All Users:\n";
+    for (const auto& user : users) {
+        std::cout << "User ID: " << user.userID << "\n";
+        for (const auto& [category, time] : user.categoryDurations) {
+            std::cout << "  " << category << ": " << time << " seconds\n";
+        }
+    }
+
+
+
 
     return 0;
 }
