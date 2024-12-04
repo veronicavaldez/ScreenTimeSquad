@@ -3,6 +3,19 @@
 #include <sstream>
 #include <iostream>
 
+//Zane- adding hashmap to store app-to-app categories
+#include <unordered_map>
+#include <string>
+
+//Zane- Hashmap creation
+std::unordered_map<std::string, std::string> appCategories = {
+    {"Instagram", "Social"},
+    {"Facebook", "Social"},
+    {"Slack", "Productivity"},
+    {"YouTube", "Entertainment"},
+    //More mappings to add later
+};
+
 std::vector<User> parseTSV(const std::string& filePath) {
     std::vector<User> data;
     std::ifstream file(filePath);
@@ -36,7 +49,14 @@ std::vector<User> parseTSV(const std::string& filePath) {
             user.userID = std::stoi(userIDStr);
             user.timestamp = timestamp;
             user.eventType = eventType;
+            user.appName = appName;
             user.Duration = 0;   // duration calculated later
+
+            //Zane- Categorizing app usage
+            if (appCategories.find(appName) != appCategories.end()) {
+                // Assign category-specific duration (initially 0, calculated later)
+                user.categoryDurations[appCategories[appName]] += 0;
+            }
 
             // add the parsed data to the vector
             data.push_back(user);
