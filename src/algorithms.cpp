@@ -33,10 +33,10 @@ double algorithms::durationCalc(const std::string& opened, const std::string& cl
 }
 
 // add up time in between open/close sessions to get user's total screen time
-std::vector<User> algorithms::calculateTotalScreenTime(const std::vector<User>& sessions) {
+    std::vector<User> algorithms::calculateTotalScreenTime(const std::vector<User>& sessions) {
     std::map<int, double> userDurations;  // map to store total screen time by userID
     std::map<int, std::string> lastOpened; // map to track the time of last opened event for each user
-
+    std::map<int, User> users;
     for (const auto& session : sessions) {
         if (session.eventType == "Opened") {
             // record opened timestamp for the user
@@ -44,8 +44,23 @@ std::vector<User> algorithms::calculateTotalScreenTime(const std::vector<User>& 
         } else if (session.eventType == "Closed" && lastOpened.find(session.userID) != lastOpened.end()) {
             // pair closed event with the last opened event to calculate the duration
             double duration = algorithms::durationCalc(lastOpened[session.userID], session.timestamp);
+
+            //Zane- Updates user's total duration
+             if (users.find(session.userID) == users.end()) {
+                // Create a new User entry if it doesn't exist
+                users[session.userID] = {session.userID, 0, "", ""};
+            }
             userDurations[session.userID] += duration; // add duration to total for user
+
+             //Zane- Update category-specific duration if app has a category
+            if (appCategories.find(session.appName) != appCategories.end()) {
+                std::string category = appCategories[session.appName];
+                users[session.userID].categoryDurations[category] += duration;
+            }
+
             lastOpened.erase(session.userID);         // remove "opened" record
+
+            
         }
     }
 
