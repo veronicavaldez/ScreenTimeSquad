@@ -1,4 +1,7 @@
 #include "algorithms.h"
+#include <algorithm>
+#include "UserSession.h"
+
 
 void algorithms::printUserDuration(User &user) {
     std::cout << "User ID: " << user.userID << " Screen Time: " << user.Duration << " seconds" << std::endl;
@@ -11,19 +14,29 @@ void algorithms::addDuration(User &user, double duration) {
 
 // calculate the duration between open/close events
 double algorithms::durationCalc(const std::string& opened, const std::string& closed) {
-    std::tm tmOpened = {}, tmClosed = {};
-    std::istringstream ssOpened(opened), ssClosed(closed);
-
-    if (!(ssOpened >> std::get_time(&tmOpened, "%Y-%m-%d %H:%M:%S")) || !(ssClosed >> std::get_time(&tmClosed, "%Y-%m-%d %H:%M:%S"))) {
-        std::cerr << "Error parsing timestamps: " << opened << " or " << closed << std::endl;
+    // std::tm represents calendar date/time, from https://en.cppreference.com/w/cpp/chrono/c/tm
+    std::tm tmOpened = {};
+    std::tm tmClosed = {};
+    std::istringstream ssOpened(opened);
+    std::istringstream ssClosed(closed);
+      if (!(ssOpened >> std::get_time(&tmOpened, "%Y-%m-%d %H:%M:%S"))) {
+        std::cerr << "Error parsing opened timestamp: " << opened << std::endl;
+        return 0;
+    }
+    if (!(ssClosed >> std::get_time(&tmClosed, "%Y-%m-%d %H:%M:%S"))) {
+        std::cerr << "Error parsing closed timestamp: " << closed << std::endl;
         return 0;
     }
 
-    return std::difftime(std::mktime(&tmClosed), std::mktime(&tmOpened));
+    // mktime converts the tm struct into time in seconds, from https://en.cppreference.com/w/cpp/chrono/c/mktime
+    std::time_t timeOpened = std::mktime(&tmOpened);
+    std::time_t timeClosed = std::mktime(&tmClosed);
+
+    return std::difftime(timeClosed, timeOpened); // returns duration in seconds
 }
 
 // add up time in between open/close sessions to get user's total screen time
-    std::vector<User> algorithms::calculateTotalScreenTime(const std::vector<User>& sessions) {
+std::vector<User> algorithms::calculateTotalScreenTime(const std::vector<User>& sessions) {
     std::map<int, double> userDurations;  // map to store total screen time by userID
     std::map<int, std::string> lastOpened; // map to track the time of last opened event for each user
     std::map<int, User> users;
@@ -42,11 +55,19 @@ double algorithms::durationCalc(const std::string& opened, const std::string& cl
             }
             userDurations[session.userID] += duration; // add duration to total for user
 
-             //Zane- Update category-specific duration if app has a category
+//             //Zane- Update category-specific duration if app has a category
             if (appCategories.find(session.appName) != appCategories.end()) {
                 std::string category = appCategories[session.appName];
                 users[session.userID].categoryDurations[category] += duration;
+//                std::cout << "User ID: " << session.userID
+//                          << ", App: " << session.appName
+//                          << ", Category: " << category
+//                          << ", Added Duration: " << duration << " seconds\n";
             }
+
+
+
+
 
             lastOpened.erase(session.userID);         // remove "opened" record
 

@@ -1,4 +1,3 @@
-# cmake_minimum_required(VERSION <specify CMake version here>)
 cmake_minimum_required(VERSION 3.10)
 project(ScreenTimeSquad)
 
@@ -11,4 +10,5 @@ add_executable(ScreenTimeSquad
         src/algorithms.h
         src/data_parser.cpp
         src/data_parser.h
+        src/cli.cpp
         src/main.cpp)
