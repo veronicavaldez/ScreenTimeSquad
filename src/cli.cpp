@@ -33,7 +33,7 @@ void CLI::displayMenu() {
 //                break;
             case 3:
                 std::cout << "Exiting... Goodbye!\n";
-                break;
+                exit(0);
             default:
                 std::cout << "Invalid choice. Please try again.\n";
         }
