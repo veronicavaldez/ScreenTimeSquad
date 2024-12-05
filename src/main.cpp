@@ -1,8 +1,12 @@
 #include <iostream>
 #include "data_parser.h"
 #include "algorithms.h"
+#include "cli.h"
+#include "UserSession.h"
 
-int main() {
+  
+
+ int main() {
     std::string filePath = "src/lsapp.tsv";
     std::vector<User> sessions = parseTSV(filePath);
 
@@ -20,29 +24,19 @@ int main() {
         return 1;
     }
 
-    std::cout << "\nComparing sorting execution times...\n";
-    algorithms::Timer(users);
-
-    // use merge sort for displaying ranked users
-    algorithms::mergeSort(users, 0, users.size() - 1);
-
-    // display ranking
-    std::cout << "\nLeaderboard:" << std::endl;
+   //  Debug: Print the first few users
+    std::cout << "Number of users after processing: " << users.size() << std::endl;
     for (size_t i = 0; i < std::min<size_t>(users.size(), 5); ++i) {
-        algorithms::printUserDuration(users[i]);
+        std::cout << "User ID: " << users[i].userID << ", Total Duration: " << users[i].Duration << std::endl;
     }
 
-    // Zane- Display category-specific breakdown for all users
-    std::cout << "\nCategory Breakdown for All Users:\n";
-    for (const auto& user : users) {
-        std::cout << "User ID: " << user.userID << "\n";
-        for (const auto& [category, time] : user.categoryDurations) {
-            std::cout << "  " << category << ": " << time << " seconds\n";
-        }
-    }
+    // Pass users to CLI
+    CLI cli(users);
 
 
-
+    cli.displayMenu();
 
     return 0;
 }
+
+

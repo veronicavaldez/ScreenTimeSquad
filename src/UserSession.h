@@ -2,6 +2,7 @@
 #define USER_SESSION_H
 
 #include <string>
+#include <unordered_map>
 
 struct User {
     int userID;
