@@ -17,8 +17,7 @@ void CLI::displayMenu() {
         std::cout << "\n===== Screen Time Squad CLI =====\n";
         std::cout << "1. Compare Merge Sort and Quick Sort Speeds\n";
         std::cout << "2. Display Leaderboard\n";
-        std::cout << "3. Display Category Breakdown\n";
-        std::cout << "4. Exit\n";
+        std::cout << "3. Exit\n";
         std::cout << "Enter your choice: ";
         std::cin >> choice;
 
@@ -29,10 +28,10 @@ void CLI::displayMenu() {
             case 2:
                 displayLeaderboard();
                 break;
+//            case 3:
+//                displayCategoryBreakdown();
+//                break;
             case 3:
-                displayCategoryBreakdown();
-                break;
-            case 4:
                 std::cout << "Exiting... Goodbye!\n";
                 break;
             default:
@@ -94,29 +93,29 @@ void CLI::displayLeaderboard() {
     }
 }
 
-void CLI::displayCategoryBreakdown() {
-    if (users.empty()) {
-        std::cerr << "No data available. Please process data first.\n";
-        return;
-    }
-
-    std::cout << "\n===== Category Breakdown for All Users =====\n";
-    for (const auto& user : users) {
-        std::cout << "User ID: " << user.userID << "\n";
-
-
-        // Check if categoryDurations is empty
-        if (user.categoryDurations.empty()) {
-            std::cout << "  No category data available for this user.\n";
-            continue;
-        }
-
-        // Iterate and print category breakdown
-        for (const auto& [category, time] : user.categoryDurations) {
-            std::cout << "  " << category << ": " << std::fixed << std::setprecision(2)
-            << "Category: " << category << ", Time: " << time << " seconds\n";
-
-
-        }
-    }
-}
+//void CLI::displayCategoryBreakdown() {
+//    if (users.empty()) {
+//        std::cerr << "No data available. Please process data first.\n";
+//        return;
+//    }
+//
+//    std::cout << "\n===== Category Breakdown for All Users =====\n";
+//    for (const auto& user : users) {
+//        std::cout << "User ID: " << user.userID << "\n";
+//
+//
+//        // Check if categoryDurations is empty
+//        if (user.categoryDurations.empty()) {
+//            std::cout << "  No category data available for this user.\n";
+//            continue;
+//        }
+//
+//        // Iterate and print category breakdown
+//        for (const auto& [category, time] : user.categoryDurations) {
+//            std::cout << "  " << category << ": " << std::fixed << std::setprecision(2)
+//            << "Category: " << category << ", Time: " << time << " seconds\n";
+//
+//
+//        }
+//    }
+//}
