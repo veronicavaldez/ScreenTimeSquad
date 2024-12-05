@@ -11,25 +11,15 @@ void algorithms::addDuration(User &user, double duration) {
 
 // calculate the duration between open/close events
 double algorithms::durationCalc(const std::string& opened, const std::string& closed) {
-    // std::tm represents calendar date/time, from https://en.cppreference.com/w/cpp/chrono/c/tm
-    std::tm tmOpened = {};
-    std::tm tmClosed = {};
-    std::istringstream ssOpened(opened);
-    std::istringstream ssClosed(closed);
-      if (!(ssOpened >> std::get_time(&tmOpened, "%Y-%m-%d %H:%M:%S"))) {
-        std::cerr << "Error parsing opened timestamp: " << opened << std::endl;
-        return 0;
-    }
-    if (!(ssClosed >> std::get_time(&tmClosed, "%Y-%m-%d %H:%M:%S"))) {
-        std::cerr << "Error parsing closed timestamp: " << closed << std::endl;
+    std::tm tmOpened = {}, tmClosed = {};
+    std::istringstream ssOpened(opened), ssClosed(closed);
+
+    if (!(ssOpened >> std::get_time(&tmOpened, "%Y-%m-%d %H:%M:%S")) || !(ssClosed >> std::get_time(&tmClosed, "%Y-%m-%d %H:%M:%S"))) {
+        std::cerr << "Error parsing timestamps: " << opened << " or " << closed << std::endl;
         return 0;
     }
 
-    // mktime converts the tm struct into time in seconds, from https://en.cppreference.com/w/cpp/chrono/c/mktime
-    std::time_t timeOpened = std::mktime(&tmOpened);
-    std::time_t timeClosed = std::mktime(&tmClosed);
-
-    return std::difftime(timeClosed, timeOpened); // returns duration in seconds
+    return std::difftime(std::mktime(&tmClosed), std::mktime(&tmOpened));
 }
 
 // add up time in between open/close sessions to get user's total screen time

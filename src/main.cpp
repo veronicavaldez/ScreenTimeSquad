@@ -36,13 +36,10 @@ int main() {
     std::cout << "\nCategory Breakdown for All Users:\n";
     for (const auto& user : users) {
         std::cout << "User ID: " << user.userID << "\n";
-        for (const auto& [category, time] : user.categoryDurations) {
+        for (const auto &[category, time]: user.categoryDurations) {
             std::cout << "  " << category << ": " << time << " seconds\n";
         }
     }
-
-
-
 
     return 0;
 }
