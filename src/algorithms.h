@@ -3,6 +3,7 @@
 #include <chrono>
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
 #include <random>
 #include <map>
 #include "UserSession.h"
