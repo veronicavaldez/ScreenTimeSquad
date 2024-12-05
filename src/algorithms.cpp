@@ -4,7 +4,7 @@
 
 
 void algorithms::printUserDuration(User &user) {
-    std::cout << "User ID: " << user.userID << " Screen Time: " << user.Duration << " seconds" << std::endl;
+    std::cout << "User ID: " << user.userID << " Screen Time: "<< user.Duration << " seconds" << std::endl;
 }
 
 // add the duration to the User struct

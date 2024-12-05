@@ -25,10 +25,10 @@
     }
 
    //  Debug: Print the first few users
-    std::cout << "Number of users after processing: " << users.size() << std::endl;
-    for (size_t i = 0; i < std::min<size_t>(users.size(), 5); ++i) {
-        std::cout << "User ID: " << users[i].userID << ", Total Duration: " << users[i].Duration << std::endl;
-    }
+    // std::cout << "Number of users after processing: " << users.size() << std::endl;
+    // for (size_t i = 0; i < std::min<size_t>(users.size(), 5); ++i) {
+    //     std::cout << "User ID: " << users[i].userID << ", Total Duration: " << users[i].Duration << std::endl;
+    // }
 
     // Pass users to CLI
     CLI cli(users);
